@@ -12,18 +12,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(MockitoExtension.class)
 class LibraryServiceTest {
-
+    // Declare the `LibraryService` object to test its `checkoutResource()` method
     LibraryService service;
-
+    // Mock the dependencies to support testing without emailing users or altering the state of the database
     @Mock EmailProvider emailProvider;
     @Mock ResourceRepository resourceRepository;
+    // Valid `id` and `email` parameters shared by the tests; TC05-TC07 pass invalid values directly instead
+    UUID id = UUID.randomUUID();
+    String email = "test@test.com";
+
+    // Before each test: initialize the object with the mocked dependencies
     @BeforeEach
     void setUp(){
 
         service = new LibraryService(emailProvider, resourceRepository);
     }
-    UUID id = UUID.randomUUID();
-    String email = "test@test.com";
 
     @Test
     void tc_01() throws DatabaseFailureException, EmailFailureException {
